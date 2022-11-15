@@ -1,0 +1,162 @@
+.machine {
+  position: relative;
+  width: 100vmin;
+  height: 100vmin;
+  
+  &__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: url(../../assets/machine.png);
+    background-size: 100% 100%;
+    position: relative;
+    z-index: 2;
+  }
+
+  &__spinner {
+    position: absolute;
+    z-index: 1;
+    left: 216/1360*100%;
+    top: 488/1360*100%;
+    width: 928/1360*100%;
+    height: 304/1360*100%;
+    display: flex;
+    transform-style: preserve-3d;
+    overflow: hidden;
+  }
+
+  &__reel {
+    flex: 1;
+    height: 100%;
+    background: #333;
+    transform-style: preserve-3d;
+
+    div {
+      position: absolute;
+      border: 1px solid #000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      backface-visibility: hidden;
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+// each step is 22.5deg (360/16)
+.spin-0 { transform: rotateX(-1800deg); }
+.spin-1 { transform: rotateX(-1822.5deg); }
+.spin-2 { transform: rotateX(-1845deg); }
+.spin-3 { transform: rotateX(-1867.5deg); }
+.spin-4 { transform: rotateX(-1890deg); }
+.spin-5 { transform: rotateX(-1912.5deg); }
+.spin-6 { transform: rotateX(-1935deg); }
+.spin-7 { transform: rotateX(-1957.5deg); }
+.spin-8 { transform: rotateX(-1980deg); }
+.spin-9 { transform: rotateX(-2002.5deg); }
+.spin-10 { transform: rotateX(-2025deg); }
+.spin-11 { transform: rotateX(-2047.5deg); }
+.spin-12 { transform: rotateX(-2070deg); }
+.spin-13 { transform: rotateX(-2092.5deg); }
+.spin-14 { transform: rotateX(-2115deg); }
+.spin-15 { transform: rotateX(-2137.5deg); }
+.spin-16 { transform: rotateX(-2160deg); }
+
+@keyframes back-spin {
+  100%  { transform: rotateX(22.5deg); }
+}
+
+@keyframes spin-0 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-1800deg); }
+}
+
+@keyframes spin-1 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-1822.5deg); }
+}
+
+@keyframes spin-2 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-1845deg); }
+}
+
+@keyframes spin-3 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-1867.5deg); }
+}
+
+@keyframes spin-4 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-1890deg); }
+}
+
+@keyframes spin-5 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-1912.5deg); }
+}
+
+@keyframes spin-6 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-1935deg); }
+}
+
+@keyframes spin-7 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-1957.5deg); }
+}
+
+@keyframes spin-8 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-1980deg); }
+}
+
+@keyframes spin-9 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-2002.5deg); }
+}
+
+@keyframes spin-10 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-2025deg); }
+}
+
+@keyframes spin-11 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-2047.5deg); }
+}
+
+@keyframes spin-12 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-2070deg); }
+}
+
+@keyframes spin-13 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-2092.5deg); }
+}
+
+@keyframes spin-14 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-2115deg); }
+}
+
+@keyframes spin-15 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-2137.5deg); }
+}
+
+@keyframes spin-16 {
+  0%    { transform: rotateX(22.5deg); }
+  100%  { transform: rotateX(-2160deg); }
+}

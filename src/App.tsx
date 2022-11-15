@@ -1,24 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useRef } from "react";
+import Spinner from "./components/Spinner";
 
 function App() {
+  const Spin = useRef<any | null>(null);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="luckyreel">
+      <div className="machine">
+        <div className="machine__image" />
+        <Spinner ref={Spin} />
+        <button
+          onClick={() => Spin.current!.spin()}
+          style={{ position: "fixed", left: 20, top: 20, zIndex: 3 }}
         >
-          Learn React
-        </a>
-      </header>
+          SPIN!
+        </button>
+      </div>
     </div>
   );
 }
