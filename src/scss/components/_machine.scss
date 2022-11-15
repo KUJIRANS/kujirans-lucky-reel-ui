@@ -16,10 +16,10 @@
   &__spinner {
     position: absolute;
     z-index: 1;
-    left: 216/1360*100%;
-    top: 488/1360*100%;
-    width: 928/1360*100%;
-    height: 304/1360*100%;
+    left: 215/1360*100%;
+    top: 487/1360*100%;
+    width: 930/1360*100%;
+    height: 306/1360*100%;
     display: flex;
     transform-style: preserve-3d;
     overflow: hidden;
@@ -33,7 +33,6 @@
 
     div {
       position: absolute;
-      border: 1px solid #000;
       left: 0;
       top: 0;
       width: 100%;
