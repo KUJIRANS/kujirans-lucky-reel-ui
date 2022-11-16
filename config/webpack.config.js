@@ -295,6 +295,7 @@ module.exports = function (webpackEnv) {
     },
     resolve: {
       fallback: {
+        buffer: require.resolve("buffer/"),
         crypto: require.resolve("crypto-browserify"),
         stream: require.resolve("stream-browserify"),
         path: require.resolve("path-browserify"),
@@ -569,6 +570,9 @@ module.exports = function (webpackEnv) {
       ].filter(Boolean),
     },
     plugins: [
+      new webpack.ProvidePlugin({
+        Buffer: ["buffer", "Buffer"],
+      }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(
