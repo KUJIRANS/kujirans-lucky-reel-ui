@@ -74,17 +74,20 @@ function App() {
     //Spinny.current!.prespin(); // this would be nice to call before the response comes back
     setStatus("WAITING...");
     setDisabled(true);
-    const tx = await wallet.signAndBroadcast(msgs);
-    // catch error:
-    // setStatus("1 USK TO SPIN!");
-    // setDisabled(false);
-    const idx = tx.events
-      .find((e) => e.type === "wasm")
-      ?.attributes.find((a) => a.key === "game")?.value;
+    let tx;
+    try {
+      const tx = await wallet.signAndBroadcast(msgs);
+      const idx = tx.events
+        .find((e) => e.type === "wasm")
+        ?.attributes.find((a) => a.key === "game")?.value;
 
-    refreshBalance();
-
-    return getResult(idx || "");
+      refreshBalance();
+      return getResult(idx || "");
+    } catch {
+      setStatus("1 USK TO SPIN!");
+      setDisabled(false);
+      return getResult("");
+    }
   };
 
   return (
@@ -99,8 +102,20 @@ function App() {
           disabled={disabled}
           onSpin={async () => {
             const res = await pull();
-            setDisabled(false);
-            setStatus("1 USK TO SPIN!");
+            if (res.length === 3) {
+              setStatus("...");
+              setTimeout(() => {
+                if (res.every((val, i, arr) => val === arr[0])) {
+                  setStatus("WINNER!");
+                } else {
+                  setStatus("1 USK TO SPIN!");
+                }
+                setDisabled(false);
+              }, 3500);
+            } else {
+              setDisabled(false);
+              setStatus("1 USK TO SPIN!");
+            }
             Spinny.current!.spin(...res, refreshBalance);
           }}
         />
