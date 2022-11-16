@@ -19,6 +19,12 @@ function App() {
   const [status, setStatus] = useState("1 USK TO SPIN!");
   const [balance, setBalance] = useState(0);
   const [disabled, setDisabled] = useState(false);
+  const [soundOn, setSoundOn] = useState(true);
+
+  const SoundConnect = new Audio("/sound/connect.wav");
+  const SoundSpin = new Audio("/sound/spin.wav");
+  const SoundWin = new Audio("/sound/win.wav");
+  const SoundLose = new Audio("/sound/lose.wav");
 
   useEffect(() => {
     const httpClient = new HttpBatchClient(chainInfo.rpc, {
@@ -107,8 +113,10 @@ function App() {
               setTimeout(() => {
                 if (res.every((val, i, arr) => val === arr[0])) {
                   setStatus("WINNER!");
+                  if (soundOn) SoundWin.play();
                 } else {
                   setStatus("1 USK TO SPIN!");
+                  if (soundOn) SoundLose.play();
                 }
                 setDisabled(false);
               }, 3500);
@@ -116,6 +124,7 @@ function App() {
               setDisabled(false);
               setStatus("1 USK TO SPIN!");
             }
+            if (soundOn) SoundSpin.play();
             Spinny.current!.Spin(...res, refreshBalance);
 
             /* const t1 = Math.round(Math.random() * 16);
