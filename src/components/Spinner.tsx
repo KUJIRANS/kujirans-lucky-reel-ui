@@ -64,10 +64,6 @@ const Spinner = forwardRef((props, ref) => {
   const doSpin = (v1: number, v2: number, v3: number) => {
     const timer = 2;
 
-    const reset1 = Reel1.current?.classList.contains(`spin-${v1}`);
-    const reset2 = Reel1.current?.classList.contains(`spin-${v1}`);
-    const reset3 = Reel1.current?.classList.contains(`spin-${v1}`);
-
     Reel1.current?.classList.remove(...Reel1.current.classList);
     Reel1.current?.classList.add("machine__reel", `spin-${v1}`);
     Reel2.current?.classList.remove(...Reel2!.current?.classList);

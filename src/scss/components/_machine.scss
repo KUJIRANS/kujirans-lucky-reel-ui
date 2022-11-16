@@ -75,87 +75,92 @@
   100%  { transform: rotateX(22.5deg); }
 }
 
+@keyframes reset {
+  25%    { transform: rotateX(-360deg); }
+  100%  { transform: rotateX(-1800deg); }
+}
+
 @keyframes spin-0 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-1800deg); }
 }
 
 @keyframes spin-1 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-1822.5deg); }
 }
 
 @keyframes spin-2 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-1845deg); }
 }
 
 @keyframes spin-3 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-1867.5deg); }
 }
 
 @keyframes spin-4 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-1890deg); }
 }
 
 @keyframes spin-5 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-1912.5deg); }
 }
 
 @keyframes spin-6 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-1935deg); }
 }
 
 @keyframes spin-7 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-1957.5deg); }
 }
 
 @keyframes spin-8 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-1980deg); }
 }
 
 @keyframes spin-9 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-2002.5deg); }
 }
 
 @keyframes spin-10 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-2025deg); }
 }
 
 @keyframes spin-11 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-2047.5deg); }
 }
 
 @keyframes spin-12 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-2070deg); }
 }
 
 @keyframes spin-13 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-2092.5deg); }
 }
 
 @keyframes spin-14 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-2115deg); }
 }
 
 @keyframes spin-15 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-2137.5deg); }
 }
 
 @keyframes spin-16 {
-  0%    { transform: rotateX(22.5deg); }
+  25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-2160deg); }
 }
