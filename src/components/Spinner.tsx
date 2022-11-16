@@ -1,12 +1,50 @@
-import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
+import {
+  useEffect,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+  useState,
+} from "react";
+import { useSpring, animated, easings } from "react-spring";
 
 const Spinner = forwardRef((props, ref) => {
   const Reel1 = useRef<HTMLDivElement | null>(null);
   const Reel2 = useRef<HTMLDivElement | null>(null);
   const Reel3 = useRef<HTMLDivElement | null>(null);
 
+  const [preSpin, setPreSpin] = useState(false);
+
+  const [angle1, setAngel1] = useState(0);
+  const [angle2, setAngel2] = useState(0);
+  const [angle3, setAngel3] = useState(0);
+
+  const ani1 = useSpring({
+    to: { rotateX: angle1 },
+    config: {
+      duration: preSpin ? 30000 : 2500,
+      easing: easings.easeOutQuart,
+    },
+  });
+
+  const ani2 = useSpring({
+    to: { rotateX: angle2 },
+    config: {
+      duration: preSpin ? 30000 : 3000,
+      easing: easings.easeOutQuart,
+    },
+  });
+
+  const ani3 = useSpring({
+    to: { rotateX: angle3 },
+    config: {
+      duration: preSpin ? 30000 : 3500,
+      easing: easings.easeOutQuart,
+    },
+  });
+
+  const SLOTS_PER_REEL = 16;
+  const SLOT_ANGLE = 360 / SLOTS_PER_REEL;
   let SIZE = 215;
-  let SLOTS_PER_REEL = 16;
   let REEL_RADIUS = Math.round(SIZE / 2 / Math.tan(Math.PI / SLOTS_PER_REEL));
 
   useEffect(() => {
@@ -15,18 +53,16 @@ const Spinner = forwardRef((props, ref) => {
     populate(Reel3.current);
 
     window.addEventListener("resize", resize);
-    return () => window.removeEventListener("resize", resize);
   }, []);
 
   const resize = (reel: any) => {
     SIZE = Reel1.current?.offsetWidth || 215;
     REEL_RADIUS = Math.round(SIZE / 2 / Math.tan(Math.PI / SLOTS_PER_REEL));
-    const slotAngle = 360 / SLOTS_PER_REEL;
 
     const list = document.querySelectorAll<HTMLElement>(".machine__reel div");
     for (var i = 0; i < list.length; i++) {
       const transform =
-        "rotateX(" + slotAngle * i + "deg) translateZ(" + REEL_RADIUS + "px)";
+        "rotateX(" + SLOT_ANGLE * i + "deg) translateZ(" + REEL_RADIUS + "px)";
       list[i].style.transform = transform;
     }
   };
@@ -34,69 +70,69 @@ const Spinner = forwardRef((props, ref) => {
   const populate = (reel: any) => {
     SIZE = Reel1.current?.offsetWidth || 215;
     REEL_RADIUS = Math.round(SIZE / 2 / Math.tan(Math.PI / SLOTS_PER_REEL));
+    const start = Math.floor(Math.random() * SLOTS_PER_REEL);
 
-    const slotAngle = 360 / SLOTS_PER_REEL;
-    const seed = Math.floor(Math.random() * SLOTS_PER_REEL);
     for (var i = 0; i < SLOTS_PER_REEL; i++) {
       const slot = document.createElement("div");
       const transform =
-        "rotateX(" + slotAngle * i + "deg) translateZ(" + REEL_RADIUS + "px)";
+        "rotateX(" + SLOT_ANGLE * i + "deg) translateZ(" + REEL_RADIUS + "px)";
       slot.style.transform = transform;
       const img = document.createElement("img");
       img.src = `/spinnies/${i + 1}.png`;
       slot.append(img);
       reel.append(slot);
-      reel.classList.add(`spin-${seed}`);
+      // random start position
+      reel.style.transform = "rotateX(" + SLOT_ANGLE * start + "deg)";
+      //reel.classList.add(`spin-${start}`);
     }
   };
 
   useImperativeHandle(ref, () => ({
-    spin(p1: number, p2: number, p3: number, cb: () => void) {
-      doSpin(p1, p2, p3, cb);
+    Spin(p1: number, p2: number, p3: number, cb: () => void) {
+      DoSpin(p1, p2, p3, cb);
     },
-    prespin() {
-      /* Reel1.current?.classList.remove(...Reel1.current.classList);
-      Reel1.current?.classList.add("machine__reel");
-      Reel2.current?.classList.remove(...Reel2!.current?.classList);
-      Reel2.current?.classList.add("machine__reel");
-      Reel3.current?.classList.remove(...Reel3!.current?.classList);
-      Reel3.current?.classList.add("machine__reel"); */
-
-      Reel1.current!.style.animation = "back-spin 5s";
-      Reel2.current!.style.animation = "back-spin 5s";
-      Reel3.current!.style.animation = "back-spin 5s";
+    Cancel() {},
+    Prespin() {
+      const t1 = Math.round(Math.random() * 16);
+      const t2 = Math.round(Math.random() * 16);
+      const t3 = Math.round(Math.random() * 16);
+      setPreSpin(true);
+      setAngel1(22.5 * t1);
+      setAngel2(22.5 * t2);
+      setAngel3(22.5 * t3);
     },
   }));
 
-  const doSpin = (v1: number, v2: number, v3: number, cb: () => void) => {
-    const timer = 2;
+  const DoSpin = (v1: number, v2: number, v3: number, cb: () => void) => {
+    const timer = 2000;
 
     setTimeout(() => {
       cb();
     }, timer * 1000);
 
-    Reel1.current?.classList.remove(...Reel1.current.classList);
-    Reel1.current?.classList.add("machine__reel", `spin-${v1}`);
-    Reel2.current?.classList.remove(...Reel2!.current?.classList);
-    Reel2.current?.classList.add("machine__reel", `spin-${v2}`);
-    Reel3.current?.classList.remove(...Reel3!.current?.classList);
-    Reel3.current?.classList.add("machine__reel", `spin-${v3}`);
-
-    Reel1.current!.style.animation =
-      "back-spin 1s, spin-" + v1 + " " + (timer + 1 * 0.5) + "s";
-
-    Reel2.current!.style.animation =
-      "back-spin 1s, spin-" + v2 + " " + (timer + 2 * 0.5) + "s";
-
-    Reel3.current!.style.animation =
-      "back-spin 1s, spin-" + v3 + " " + (timer + 3 * 0.5) + "s";
+    setPreSpin(false);
+    setAngel1(-22.5 * v1 - 1800);
+    setAngel2(-22.5 * v2 - 1800);
+    setAngel3(-22.5 * v3 - 1800);
   };
 
   return (
     <div className="machine__spinner">
-      <div ref={Reel1} className="machine__reel"></div>
-      <div ref={Reel2} className="machine__reel"></div>
-      <div ref={Reel3} className="machine__reel"></div>
+      <animated.div
+        style={ani1}
+        ref={Reel1}
+        className="machine__reel"
+      ></animated.div>
+      <animated.div
+        style={ani2}
+        ref={Reel2}
+        className="machine__reel"
+      ></animated.div>
+      <animated.div
+        style={ani3}
+        ref={Reel3}
+        className="machine__reel"
+      ></animated.div>
     </div>
   );
 });

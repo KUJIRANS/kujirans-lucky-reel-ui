@@ -53,7 +53,7 @@
 }
 
 // each step is 22.5deg (360/16)
-.spin-0 { transform: rotateX(-1800deg); }
+/* .spin-0 { transform: rotateX(-1800deg); }
 .spin-1 { transform: rotateX(-1822.5deg); }
 .spin-2 { transform: rotateX(-1845deg); }
 .spin-3 { transform: rotateX(-1867.5deg); }
@@ -167,4 +167,4 @@
 @keyframes spin-16 {
   25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-2160deg); }
-}
+} */

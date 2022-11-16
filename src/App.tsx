@@ -71,6 +71,7 @@ function App() {
       }),
     ];
 
+    Spinny.current!.Prespin(); // this would be nice to call before the response comes back
     setStatus("WAITING...");
     setDisabled(true);
     let tx;
@@ -79,7 +80,6 @@ function App() {
       const idx = tx.events
         .find((e) => e.type === "wasm")
         ?.attributes.find((a) => a.key === "game")?.value;
-      Spinny.current!.prespin(); // this would be nice to call before the response comes back
 
       refreshBalance();
       return getResult(idx || "");
@@ -116,7 +116,13 @@ function App() {
               setDisabled(false);
               setStatus("1 USK TO SPIN!");
             }
-            Spinny.current!.spin(...res, refreshBalance);
+            Spinny.current!.Spin(...res, refreshBalance);
+
+            /* const t1 = Math.round(Math.random() * 16);
+            const t2 = Math.round(Math.random() * 16);
+            const t3 = Math.round(Math.random() * 16);
+
+            Spinny.current!.Prespin(); */
           }}
         />
       </div>
