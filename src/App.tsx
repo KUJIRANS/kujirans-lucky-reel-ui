@@ -21,7 +21,6 @@ function App() {
   const [disabled, setDisabled] = useState(false);
   const [soundOn, setSoundOn] = useState(true);
 
-  const SoundConnect = new Audio("/sound/connect.wav");
   const SoundSpin = new Audio("/sound/spin.wav");
   const SoundWin = new Audio("/sound/win.wav");
   const SoundLose = new Audio("/sound/lose.wav");
@@ -126,12 +125,6 @@ function App() {
             }
             if (soundOn) SoundSpin.play();
             Spinny.current!.Spin(...res, refreshBalance);
-
-            /* const t1 = Math.round(Math.random() * 16);
-            const t2 = Math.round(Math.random() * 16);
-            const t3 = Math.round(Math.random() * 16);
-
-            Spinny.current!.Prespin(); */
           }}
         />
       </div>

@@ -83,7 +83,6 @@ const Spinner = forwardRef((props, ref) => {
       reel.append(slot);
       // random start position
       reel.style.transform = "rotateX(" + SLOT_ANGLE * start + "deg)";
-      //reel.classList.add(`spin-${start}`);
     }
   };
 

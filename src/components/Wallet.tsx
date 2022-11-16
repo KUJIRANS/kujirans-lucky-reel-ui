@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { UseKeplr } from "../services/useKeplr";
 
 const Wallet: FC<{ wallet: UseKeplr }> = ({ wallet }) => {
