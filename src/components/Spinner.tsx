@@ -1,9 +1,5 @@
 import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 
-const Spacer = () => (
-  <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
-);
-
 const Spinner = forwardRef((props, ref) => {
   const Reel1 = useRef<HTMLDivElement | null>(null);
   const Reel2 = useRef<HTMLDivElement | null>(null);
@@ -61,7 +57,7 @@ const Spinner = forwardRef((props, ref) => {
       const p2 = Math.round(Math.random() * 16);
       const p3 = Math.round(Math.random() * 16);
       doSpin(p1, p2, p3);
-      console.log(p1 + " | " + p2 + " | " + p3);
+      //console.log(p1 + " | " + p2 + " | " + p3);
     },
   }));
 
@@ -94,19 +90,6 @@ const Spinner = forwardRef((props, ref) => {
       <div ref={Reel1} className="machine__reel"></div>
       <div ref={Reel2} className="machine__reel"></div>
       <div ref={Reel3} className="machine__reel"></div>
-
-      {/* <div className="machine__window">
-        <Spacer />
-        <div className="machine__reel" />
-      </div>
-      <div className="machine__window">
-        <Spacer />
-        <div className="machine__reel" />
-      </div>
-      <div className="machine__window">
-        <Spacer />
-        <div className="machine__reel" />
-      </div> */}
     </div>
   );
 });

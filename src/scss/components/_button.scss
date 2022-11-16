@@ -1,0 +1,78 @@
+button.button {
+  cursor: pointer;
+}
+
+.button {
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: 100% 100%;
+  z-index: 2;
+  width: 256/1360*100%;
+  height: 56/1360*100%;
+  font-family: 'pixel', monospace;
+  color: #4030aa;
+  font-size: 0.875rem;
+
+  &:focus, &:active, &:hover {
+    outline: none;
+  }
+
+  &--wallet {
+    background-image: url(../../assets/wallet-off.png);
+    position: absolute;
+    left: 864/1360*100%;
+    top: 384/1360*100%;
+    
+    &.on {
+      background-image: url(../../assets/wallet-on.png);
+      box-shadow: 0 0 2.5rem 0 rgba(#03fdcd, 0.69);
+    }
+
+    &:active:not(.on) {
+      background-image: url(../../assets/wallet-press.png);
+    }
+  }
+
+  &--spin {
+    background-image: url(../../assets/spin-off.png);
+    position: absolute;
+    left: 912/1360*100%;
+    top: 928/1360*100%;
+    
+    &.on {
+      background-image: url(../../assets/spin-on.png);
+      box-shadow: 0 0 2.5rem 0 rgba(#03fd03, 0.69);
+    }
+
+    &:active {
+      background-image: url(../../assets/spin-press.png);
+    }
+  }
+
+  &--balance {
+    background-image: url(../../assets/balance-off.png);
+    position: absolute;
+    left: 552/1360*100%;
+    top: 928/1360*100%;
+    
+    &.on {
+      background-image: url(../../assets/balance-on.png);
+      box-shadow: 0 0 2.5rem 0 rgba(#ff00fc, 0.69);
+    }
+  }
+
+  &--status {
+    background-image: url(../../assets/status-off.png);
+    position: absolute;
+    left: 192/1360*100%;
+    top: 928/1360*100%;
+    
+    &.on {
+      background-image: url(../../assets/status-on.png);
+      box-shadow: 0 0 2.5rem 0 rgba(#ffa200, 0.69);
+    }
+  }
+}
