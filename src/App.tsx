@@ -1,23 +1,53 @@
-import { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Spinner from "./components/Spinner";
 import Wallet from "./components/Wallet";
 import Spin from "./components/Spin";
 import Balance from "./components/Balance";
 import Status from "./components/Status";
-import { useKeplr } from "./services/useKeplr";
-import { msg, USK_TESTNET } from "kujira.js";
+import { chainInfo, useKeplr } from "./services/useKeplr";
+import { kujiraQueryClient, msg, USK_TESTNET } from "kujira.js";
 import { coins } from "@cosmjs/stargate";
+import { HttpBatchClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 
 const CONTRACT =
-  "kujira1ewuwnd9586ffctrasa0llqrcr63xfewdjrppqfg54pse7z96whfq440fcy";
+  "kujira1uxeul6hxntl7rgwmagtrjx0hprue9eajj5r3m724xcestgsnvmaqzft36x";
 
 function App() {
   const Spinny = useRef<any | null>(null);
   const wallet = useKeplr();
-  const [game, setGame] = useState<null | string>(null);
+  const [tmClient, setTmClient] = useState<null | Tendermint34Client>(null);
 
-  const pull = async () => {
-    if (!wallet.account) return;
+  useEffect(() => {
+    const httpClient = new HttpBatchClient(chainInfo.rpc, {
+      dispatchInterval: 100,
+      batchSizeLimit: 200,
+    });
+    Tendermint34Client.create(httpClient).then(setTmClient);
+  }, []);
+
+  const query = useMemo(
+    () => tmClient && kujiraQueryClient({ client: tmClient }),
+    [tmClient]
+  );
+
+  const getResult = (idx: string): Promise<[number, number, number]> => {
+    if (!query) throw new Error();
+
+    return query.wasm
+      .queryContractSmart(CONTRACT, { game: { idx } })
+      .then(({ result }: { result: [number, number, number] }) =>
+        result
+          ? [
+              Math.floor(result[0] / 16),
+              Math.floor(result[1] / 16),
+              Math.floor(result[2] / 16),
+            ]
+          : getResult(idx)
+      );
+  };
+
+  const pull = async (): Promise<[number, number, number]> => {
+    if (!wallet.account) throw new Error("Wallet not connected");
     const msgs = [
       msg.wasm.msgExecuteContract({
         sender: wallet.account.address,
@@ -31,11 +61,9 @@ function App() {
     const idx = tx.events
       .find((e) => e.type === "wasm")
       ?.attributes.find((a) => a.key === "game")?.value;
-    idx && setGame(idx);
-    console.log(tx);
-  };
 
-  console.log({ game });
+    return getResult(idx || "");
+  };
 
   return (
     <div className="luckyreel">
@@ -47,8 +75,10 @@ function App() {
         <Balance />
         <Spin
           onSpin={async () => {
-            await pull();
-            Spinny.current!.spin();
+            const res = await pull();
+            console.log(res);
+
+            Spinny.current!.spin(...res);
           }}
         />
       </div>

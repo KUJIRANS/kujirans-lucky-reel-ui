@@ -51,11 +51,9 @@ const Spinner = forwardRef((props, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    spin() {
+    spin(p1: number, p2: number, p3: number) {
       // get from contract
-      const p1 = Math.round(Math.random() * 16);
-      const p2 = Math.round(Math.random() * 16);
-      const p3 = Math.round(Math.random() * 16);
+
       doSpin(p1, p2, p3);
       //console.log(p1 + " | " + p2 + " | " + p3);
     },

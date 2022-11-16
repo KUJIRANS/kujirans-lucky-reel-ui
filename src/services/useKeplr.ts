@@ -17,9 +17,9 @@ import {
   USK_TESTNET,
 } from "kujira.js";
 
-const network: NETWORK = "harpoon-4";
-const chainInfo = CHAIN_INFO[network];
-const feeDenom = USK_TESTNET.reference;
+export const network: NETWORK = "harpoon-4";
+export const chainInfo = CHAIN_INFO[network];
+export const feeDenom = USK_TESTNET.reference;
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
