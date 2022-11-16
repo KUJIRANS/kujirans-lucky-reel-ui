@@ -62,9 +62,9 @@ const Spinner = forwardRef((props, ref) => {
       Reel3.current?.classList.remove(...Reel3!.current?.classList);
       Reel3.current?.classList.add("machine__reel"); */
 
-      Reel1.current!.style.animation = "back-spin 3s";
-      Reel2.current!.style.animation = "back-spin 3s";
-      Reel3.current!.style.animation = "back-spin 3s";
+      Reel1.current!.style.animation = "back-spin 5s";
+      Reel2.current!.style.animation = "back-spin 5s";
+      Reel3.current!.style.animation = "back-spin 5s";
     },
   }));
 
