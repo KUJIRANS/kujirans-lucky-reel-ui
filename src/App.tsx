@@ -97,6 +97,10 @@ function App() {
 
   return (
     <div className="luckyreel">
+      <button
+        className={`volume ${soundOn ? "" : "mute"}`}
+        onClick={() => setSoundOn(!soundOn)}
+      />
       <div className="machine">
         <div className="machine__image" />
         <Spinner ref={Spinny} />

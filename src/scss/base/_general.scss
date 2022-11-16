@@ -25,3 +25,22 @@ body {
   align-items: flex-end;
   justify-content: center;
 }
+
+.volume {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: 44px;
+  height: 44px;
+  background: none;
+  cursor: pointer;
+  border: 0 !important;
+  outline: none !important;
+  background-size: 100% 100%;
+  background-image: url(../../assets/unmute.png);
+  z-index: 2;
+  
+  &.mute {
+    background-image: url(../../assets/mute.png);
+  }
+}
