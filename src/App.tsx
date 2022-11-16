@@ -16,7 +16,7 @@ function App() {
   const Spinny = useRef<any | null>(null);
   const wallet = useKeplr();
   const [tmClient, setTmClient] = useState<null | Tendermint34Client>(null);
-
+  const [status, setStatus] = useState("1 USK TO SPIN!");
   const [balance, setBalance] = useState(0);
 
   useEffect(() => {
@@ -70,6 +70,7 @@ function App() {
       }),
     ];
 
+    //Spinny.current!.prespin();
     const tx = await wallet.signAndBroadcast(msgs);
     const idx = tx.events
       .find((e) => e.type === "wasm")
@@ -85,12 +86,11 @@ function App() {
         <div className="machine__image" />
         <Spinner ref={Spinny} />
         <Wallet wallet={wallet} />
-        <Status status="READY!" />
+        <Status status={status} />
         <Balance wallet={wallet} balance={balance} />
         <Spin
           onSpin={async () => {
             const res = await pull();
-
             Spinny.current!.spin(...res, refreshBalance);
           }}
         />

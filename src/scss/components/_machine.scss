@@ -75,6 +75,10 @@
   100%  { transform: rotateX(22.5deg); }
 }
 
+@keyframes pre-spin {
+  100%  { transform: rotateX(720deg); }
+}
+
 @keyframes reset {
   25%    { transform: rotateX(-360deg); }
   100%  { transform: rotateX(-1800deg); }
