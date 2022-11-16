@@ -18,6 +18,7 @@ function App() {
   const [tmClient, setTmClient] = useState<null | Tendermint34Client>(null);
   const [status, setStatus] = useState("1 USK TO SPIN!");
   const [balance, setBalance] = useState(0);
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     const httpClient = new HttpBatchClient(chainInfo.rpc, {
@@ -70,11 +71,17 @@ function App() {
       }),
     ];
 
-    //Spinny.current!.prespin();
+    //Spinny.current!.prespin(); // this would be nice to call before the response comes back
+    setStatus("WAITING...");
+    setDisabled(true);
     const tx = await wallet.signAndBroadcast(msgs);
+    // catch error:
+    // setStatus("1 USK TO SPIN!");
+    // setDisabled(false);
     const idx = tx.events
       .find((e) => e.type === "wasm")
       ?.attributes.find((a) => a.key === "game")?.value;
+
     refreshBalance();
 
     return getResult(idx || "");
@@ -89,8 +96,11 @@ function App() {
         <Status status={status} />
         <Balance wallet={wallet} balance={balance} />
         <Spin
+          disabled={disabled}
           onSpin={async () => {
             const res = await pull();
+            setDisabled(false);
+            setStatus("1 USK TO SPIN!");
             Spinny.current!.spin(...res, refreshBalance);
           }}
         />

@@ -7,7 +7,7 @@ const Balance: FC<{ wallet: UseKeplr; balance: number }> = ({
 }) => {
   return (
     <div className={`button button--balance ${wallet.account ? "on" : ""}`}>
-      {Math.floor(balance / 10 ** 6)} USK
+      {Math.floor(balance / 10 ** 6).toLocaleString()} USK
     </div>
   );
 };

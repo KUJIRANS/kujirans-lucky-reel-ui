@@ -46,9 +46,14 @@ button.button {
       background-image: url(../../assets/spin-on.png);
       box-shadow: 0 0 2.5rem 0 rgba(#03fd03, 0.69);
     }
-
-    &:active {
+    
+    &:active:not(:disabled) {
       background-image: url(../../assets/spin-press.png);
+    }
+    
+    &:disabled {
+      background-image: url(../../assets/spin-off.png);
+      box-shadow: none;
     }
   }
 

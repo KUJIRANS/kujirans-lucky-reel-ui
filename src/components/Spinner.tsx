@@ -55,16 +55,16 @@ const Spinner = forwardRef((props, ref) => {
       doSpin(p1, p2, p3, cb);
     },
     prespin() {
-      Reel1.current?.classList.remove(...Reel1.current.classList);
+      /* Reel1.current?.classList.remove(...Reel1.current.classList);
       Reel1.current?.classList.add("machine__reel");
       Reel2.current?.classList.remove(...Reel2!.current?.classList);
       Reel2.current?.classList.add("machine__reel");
       Reel3.current?.classList.remove(...Reel3!.current?.classList);
-      Reel3.current?.classList.add("machine__reel");
+      Reel3.current?.classList.add("machine__reel"); */
 
-      Reel1.current!.style.animation = "pre-spin 3s";
-      Reel2.current!.style.animation = "pre-spin 3s";
-      Reel3.current!.style.animation = "pre-spin 3s";
+      Reel1.current!.style.animation = "back-spin 3s";
+      Reel2.current!.style.animation = "back-spin 3s";
+      Reel3.current!.style.animation = "back-spin 3s";
     },
   }));
 
