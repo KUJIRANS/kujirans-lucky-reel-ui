@@ -17,6 +17,8 @@ function App() {
   const wallet = useKeplr();
   const [tmClient, setTmClient] = useState<null | Tendermint34Client>(null);
 
+  const [balance, setBalance] = useState(0);
+
   useEffect(() => {
     const httpClient = new HttpBatchClient(chainInfo.rpc, {
       dispatchInterval: 100,
@@ -29,6 +31,17 @@ function App() {
     () => tmClient && kujiraQueryClient({ client: tmClient }),
     [tmClient]
   );
+
+  const refreshBalance = () =>
+    wallet.account &&
+    query &&
+    query.bank
+      .balance(wallet.account.address, USK_TESTNET.reference)
+      .then(({ amount }) => setBalance(parseInt(amount)));
+
+  useEffect(() => {
+    refreshBalance();
+  }, [query, wallet.account?.address]);
 
   const getResult = (idx: string): Promise<[number, number, number]> => {
     if (!query) throw new Error();
@@ -61,6 +74,7 @@ function App() {
     const idx = tx.events
       .find((e) => e.type === "wasm")
       ?.attributes.find((a) => a.key === "game")?.value;
+    refreshBalance();
 
     return getResult(idx || "");
   };
@@ -72,13 +86,12 @@ function App() {
         <Spinner ref={Spinny} />
         <Wallet wallet={wallet} />
         <Status status="READY!" />
-        <Balance />
+        <Balance wallet={wallet} balance={balance} />
         <Spin
           onSpin={async () => {
             const res = await pull();
-            console.log(res);
 
-            Spinny.current!.spin(...res);
+            Spinny.current!.spin(...res, refreshBalance);
           }}
         />
       </div>

@@ -1,10 +1,13 @@
-const Balance = () => {
-  const address = "test";
-  const balance = 0;
+import { FC } from "react";
+import { UseKeplr } from "../services/useKeplr";
 
+const Balance: FC<{ wallet: UseKeplr; balance: number }> = ({
+  wallet,
+  balance,
+}) => {
   return (
-    <div className={`button button--balance ${address ? "on" : ""}`}>
-      {balance} USK
+    <div className={`button button--balance ${wallet.account ? "on" : ""}`}>
+      {Math.floor(balance / 10 ** 6)} USK
     </div>
   );
 };

@@ -51,16 +51,20 @@ const Spinner = forwardRef((props, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    spin(p1: number, p2: number, p3: number) {
+    spin(p1: number, p2: number, p3: number, cb: () => void) {
       // get from contract
 
-      doSpin(p1, p2, p3);
+      doSpin(p1, p2, p3, cb);
       //console.log(p1 + " | " + p2 + " | " + p3);
     },
   }));
 
-  const doSpin = (v1: number, v2: number, v3: number) => {
+  const doSpin = (v1: number, v2: number, v3: number, cb: () => void) => {
     const timer = 2;
+
+    setTimeout(() => {
+      cb();
+    }, timer * 1000);
 
     Reel1.current?.classList.remove(...Reel1.current.classList);
     Reel1.current?.classList.add("machine__reel", `spin-${v1}`);
