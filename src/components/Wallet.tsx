@@ -1,18 +1,13 @@
-import { useState } from "react";
+import { FC, useState } from "react";
+import { UseKeplr } from "../services/useKeplr";
 
-const Wallet = () => {
-  const [address, setAddress] = useState<string | null>();
-
-  const connectWallet = () => {
-    setAddress("abcd");
-  };
-
+const Wallet: FC<{ wallet: UseKeplr }> = ({ wallet }) => {
   return (
     <button
-      className={`button button--wallet ${address ? "on" : ""}`}
-      onClick={connectWallet}
+      className={`button button--wallet ${wallet.account ? "on" : ""}`}
+      onClick={() => wallet.connect && wallet.connect()}
     >
-      {address ? "CONNECTED" : "CONNECT WALLET"}
+      {wallet.account ? "CONNECTED" : "CONNECT WALLET"}
     </button>
   );
 };
