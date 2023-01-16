@@ -1,21 +1,8 @@
-import { Decimal } from "@cosmjs/math";
 import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
-import {
-  DeliverTxResponse,
-  GasPrice,
-  SigningStargateClient,
-} from "@cosmjs/stargate";
+import { DeliverTxResponse } from "@cosmjs/stargate";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
+import { CHAIN_INFO, Keplr, MAINNET, NETWORK, USK } from "kujira.js";
 import { useEffect, useState } from "react";
-
-import {
-  aminoTypes,
-  CHAIN_INFO,
-  MAINNET,
-  NETWORK,
-  registry,
-  USK,
-} from "kujira.js";
 
 export const network: NETWORK = MAINNET;
 export const chainInfo = CHAIN_INFO[network];
@@ -34,61 +21,22 @@ export type UseKeplr = {
 };
 
 export const useKeplr = (): UseKeplr => {
-  const [accounts, setAccounts] = useState<null | readonly AccountData[]>(null);
+  const [wallet, setWallet] = useState<null | Keplr>(null);
   const keplr = window.keplr;
 
   const connect = () => {
     if (!keplr) return;
 
-    keplr
-      .experimentalSuggestChain({
-        ...chainInfo,
-        // Keplr is bullshti and defaults to the first of these provided as the fee denom
-        feeCurrencies: chainInfo.feeCurrencies.filter(
-          (x) => x.coinMinimalDenom === feeDenom
-        ),
-      })
-      .then(() => keplr.enable(network))
-      .then(() => keplr.getOfflineSignerAuto(network))
-      .then((signer) => signer.getAccounts())
-      .then((as) => {
-        document.cookie = "keplr=connected; path=/";
-        setAccounts(as);
-      });
+    Keplr.connect(chainInfo, { feeDenom }).then((w) => {
+      setWallet(w);
+      document.cookie = "keplr=connected; path=/";
+    });
   };
 
   useEffect(() => {
     const stored = document.cookie.includes("keplr=connected");
-    if (stored && connect) connect();
+    if (stored) connect();
   }, [keplr, connect]);
-
-  const account = accounts ? accounts[0] : null;
-
-  useEffect(() => {
-    window.addEventListener("keplr_keystorechange", () => {
-      const keplr = window.keplr;
-      if (!keplr) return;
-
-      account &&
-        keplr
-          .getOfflineSignerAuto(network)
-          .then((signer) => signer.getAccounts())
-          .then(setAccounts);
-    });
-  }, [account]);
-
-  useEffect(() => {
-    if (!account) return;
-    const keplr = window.keplr;
-    keplr
-      ?.experimentalSuggestChain({
-        ...chainInfo,
-        feeCurrencies: chainInfo.feeCurrencies.filter(
-          (x) => x.coinMinimalDenom === feeDenom
-        ),
-      })
-      .then(() => keplr.enable(network));
-  }, [account, network, chainInfo]);
 
   const signAndBroadcast = async (
     msgs: EncodeObject[],
@@ -97,33 +45,17 @@ export const useKeplr = (): UseKeplr => {
       cb: (total: number, remaining: number) => void;
     }
   ): Promise<DeliverTxResponse> => {
-    if (!window.keplr || !account) throw new Error("No Wallet Connected");
+    if (!wallet) throw new Error("No Wallet Connected");
 
-    const signer = await window.keplr.getOfflineSignerAuto(network);
-    const gasPrice = new GasPrice(
-      Decimal.fromUserInput("0.00125", 18),
-      feeDenom
-    );
-
-    const client = await SigningStargateClient.connectWithSigner(
-      chainInfo.rpc,
-      signer,
-      {
-        registry,
-        gasPrice,
-        aminoTypes: aminoTypes("kujira"),
-      }
-    );
-
-    return await client.signAndBroadcast(account.address, msgs, 1.5);
+    return wallet.signAndBroadcast(msgs);
   };
 
   return {
-    account,
+    account: wallet?.account || null,
     connect,
     disconnect: () => {
       document.cookie = "keplr=disconnected;";
-      setAccounts(null);
+      setWallet(null);
     },
     signAndBroadcast,
   };

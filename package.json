@@ -42,7 +42,7 @@
     "jest": "^27.4.3",
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
-    "kujira.js": "Team-Kujira/kujira.js#b6453bb9bb997a59b43cf35d6f39262b081f7151",
+    "kujira.js": "Team-Kujira/kujira.js#7c4e966819d49e12ad0f065fce51678a7075b2c0",
     "mini-css-extract-plugin": "^2.4.5",
     "path-browserify": "^1.0.1",
     "postcss": "^8.4.4",

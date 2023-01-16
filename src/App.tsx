@@ -19,11 +19,6 @@ function App() {
   const [status, setStatus] = useState("1 USK TO SPIN!");
   const [balance, setBalance] = useState(0);
   const [disabled, setDisabled] = useState(false);
-  const [soundOn, setSoundOn] = useState(true);
-
-  const SoundSpin = new Audio("/sound/spin.wav");
-  const SoundWin = new Audio("/sound/win.wav");
-  const SoundLose = new Audio("/sound/lose.wav");
 
   useEffect(() => {
     const httpClient = new HttpBatchClient(chainInfo.rpc, {
@@ -76,7 +71,6 @@ function App() {
       }),
     ];
 
-    Spinny.current!.Prespin(); // this would be nice to call before the response comes back
     setStatus("WAITING...");
     setDisabled(true);
     let tx;
@@ -85,6 +79,7 @@ function App() {
       const idx = tx.events
         .find((e) => e.type === "wasm")
         ?.attributes.find((a) => a.key === "game")?.value;
+      Spinny.current!.prespin(); // this would be nice to call before the response comes back
 
       refreshBalance();
       return getResult(idx || "");
@@ -97,10 +92,6 @@ function App() {
 
   return (
     <div className="luckyreel">
-      <button
-        className={`volume ${soundOn ? "" : "mute"}`}
-        onClick={() => setSoundOn(!soundOn)}
-      />
       <div className="machine">
         <div className="machine__image" />
         <Spinner ref={Spinny} />
@@ -116,10 +107,8 @@ function App() {
               setTimeout(() => {
                 if (res.every((val, i, arr) => val === arr[0])) {
                   setStatus("WINNER!");
-                  if (soundOn) SoundWin.play();
                 } else {
                   setStatus("1 USK TO SPIN!");
-                  if (soundOn) SoundLose.play();
                 }
                 setDisabled(false);
               }, 3500);
@@ -127,8 +116,7 @@ function App() {
               setDisabled(false);
               setStatus("1 USK TO SPIN!");
             }
-            if (soundOn) SoundSpin.play();
-            Spinny.current!.Spin(...res, refreshBalance);
+            Spinny.current!.spin(...res, refreshBalance);
           }}
         />
       </div>
