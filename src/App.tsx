@@ -19,6 +19,7 @@ function App() {
   const [status, setStatus] = useState("1 USK TO SPIN!");
   const [balance, setBalance] = useState(0);
   const [disabled, setDisabled] = useState(false);
+  const [displayModal, setDisplayModal] = useState(true);
 
   useEffect(() => {
     const httpClient = new HttpBatchClient(chainInfo.rpc, {
@@ -79,7 +80,7 @@ function App() {
       const idx = tx.events
         .find((e) => e.type === "wasm")
         ?.attributes.find((a) => a.key === "game")?.value;
-      Spinny.current!.prespin(); // this would be nice to call before the response comes back
+      Spinny.current!.prespin();
 
       refreshBalance();
       return getResult(idx || "");
@@ -120,6 +121,45 @@ function App() {
           }}
         />
       </div>
+      {displayModal && (
+        <div className="modal">
+          <div className="modal__window">
+            <h1>
+              Welcome to <span>The Lucky Reel</span> by Kujira
+            </h1>
+            <h2>
+              Get 3 Kujirans in a row to <span>WIN 200 USK!</span>
+            </h2>
+            <h3>Each Spin costs 1 USK!</h3>
+            <p>
+              To play you will need at least{" "}
+              <a
+                href="https://fin.kujira.app/trade/kujira1rwx6w02alc4kaz7xpyg3rlxpjl4g63x5jq292mkxgg65zqpn5llq202vh5?q=featured"
+                target="_blank"
+              >
+                1 USK in your Kujira wallet
+              </a>
+              .
+            </p>
+            <ol>
+              <li>
+                Connect your Kujira wallet using the CONNECT WALLET button
+              </li>
+              <li>Click SPIN to play 1 game</li>
+              <li>Available USK will display on purple button</li>
+            </ol>
+            <p>0.2 USK per spin goes to KUJI Stakers.</p>
+            <p>1 in 256 chance to win.</p>
+            <h4>
+              Gamble responsibly. Gambling involves risk. Please only gamble
+              with funds that you can comfortably afford to lose.
+            </h4>
+            <button className="button" onClick={() => setDisplayModal(false)}>
+              LETS GO!
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

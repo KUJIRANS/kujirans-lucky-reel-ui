@@ -1,0 +1,51 @@
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba($black, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 10;
+
+  &__window {
+    background: $black;
+    border: 4px solid $teal;
+    padding: 2rem;
+    width: 100%;
+    max-width: 37.5rem;
+    font-family: "pixel";
+    color: $white;
+    box-shadow: 0 0 1rem 0 rgba($teal, 0.5);
+
+    a {
+      color: $teal;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    span {
+      color: #C700FF;
+    }
+
+    .button {
+      margin-top: 2rem;
+      width: 256px;
+      height: 56px;
+      background-image: url(../../assets/spin-on.png);
+      box-shadow: 0 0 2.5rem 0 rgba(#03fd03, 0.69);
+    
+      &:active {
+        background-image: url(../../assets/spin-press.png);
+      }
+    }
+  }
+}
