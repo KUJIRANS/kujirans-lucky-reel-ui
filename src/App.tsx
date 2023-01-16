@@ -1,16 +1,16 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import Spinner from "./components/Spinner";
-import Wallet from "./components/Wallet";
-import Spin from "./components/Spin";
-import Balance from "./components/Balance";
-import Status from "./components/Status";
-import { chainInfo, useKeplr } from "./services/useKeplr";
-import { kujiraQueryClient, msg, USK_TESTNET } from "kujira.js";
 import { coins } from "@cosmjs/stargate";
 import { HttpBatchClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { kujiraQueryClient, msg, USK } from "kujira.js";
+import { useEffect, useMemo, useRef, useState } from "react";
+import Balance from "./components/Balance";
+import Spin from "./components/Spin";
+import Spinner from "./components/Spinner";
+import Status from "./components/Status";
+import Wallet from "./components/Wallet";
+import { chainInfo, useKeplr } from "./services/useKeplr";
 
 const CONTRACT =
-  "kujira1uxeul6hxntl7rgwmagtrjx0hprue9eajj5r3m724xcestgsnvmaqzft36x";
+  "kujira1rt0fzu0w32ymr6cxl4867rwqfaen6mmx2k2ulqna9zmc0ft2ye7qxeetxn";
 
 function App() {
   const Spinny = useRef<any | null>(null);
@@ -42,7 +42,7 @@ function App() {
     wallet.account &&
     query &&
     query.bank
-      .balance(wallet.account.address, USK_TESTNET.reference)
+      .balance(wallet.account.address, USK.reference)
       .then(({ amount }) => setBalance(parseInt(amount)));
 
   useEffect(() => {
@@ -72,7 +72,7 @@ function App() {
         sender: wallet.account.address,
         contract: CONTRACT,
         msg: Buffer.from(JSON.stringify({ pull: {} })),
-        funds: coins(1000000, USK_TESTNET.reference),
+        funds: coins(1000000, USK.reference),
       }),
     ];
 

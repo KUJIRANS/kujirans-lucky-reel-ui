@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
-import { Window as KeplrWindow } from "@keplr-wallet/types";
+import { Decimal } from "@cosmjs/math";
 import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
 import {
-  SigningStargateClient,
-  GasPrice,
   DeliverTxResponse,
+  GasPrice,
+  SigningStargateClient,
 } from "@cosmjs/stargate";
-import { Decimal } from "@cosmjs/math";
+import { Window as KeplrWindow } from "@keplr-wallet/types";
+import { useEffect, useState } from "react";
 
 import {
-  registry,
   aminoTypes,
   CHAIN_INFO,
   MAINNET,
   NETWORK,
-  USK_TESTNET,
+  registry,
+  USK,
 } from "kujira.js";
 
-export const network: NETWORK = "harpoon-4";
+export const network: NETWORK = MAINNET;
 export const chainInfo = CHAIN_INFO[network];
-export const feeDenom = USK_TESTNET.reference;
+export const feeDenom = USK.reference;
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -60,7 +60,7 @@ export const useKeplr = (): UseKeplr => {
   useEffect(() => {
     const stored = document.cookie.includes("keplr=connected");
     if (stored && connect) connect();
-  }, [keplr]);
+  }, [keplr, connect]);
 
   const account = accounts ? accounts[0] : null;
 
