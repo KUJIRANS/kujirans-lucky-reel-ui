@@ -1,6 +1,6 @@
 # The Lucky Reel by Kujira
 
-Get 3 Kujirans in a row to WIN 200 USK, using on-chain randomness by entropic labs, with a 1 in 256 chance to win.
+Get 3 Kujirans in a row to WIN 200 USK, using on-chain randomness by entropic labs, with a 1 in 256 chance to win. https://docs.kujira.app/developers/smart-contracts/entropy-beacon.
 
 Each Spin costs 1 USK, 0.2 USK per spin goes to KUJI Stakers.
 
