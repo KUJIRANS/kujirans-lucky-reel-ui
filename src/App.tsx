@@ -1,4 +1,4 @@
-import { coins } from "@cosmjs/stargate";
+import { assertIsDeliverTxSuccess, coins } from "@cosmjs/stargate";
 import { HttpBatchClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { kujiraQueryClient, msg, USK } from "kujira.js";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -77,13 +77,15 @@ function App() {
     let tx;
     try {
       const tx = await wallet.signAndBroadcast(msgs);
+      assertIsDeliverTxSuccess(tx);
       const idx = tx.events
         .find((e) => e.type === "wasm")
         ?.attributes.find((a) => a.key === "game")?.value;
+      if (!idx) throw new Error("Game not found");
       Spinny.current!.prespin();
 
       refreshBalance();
-      return getResult(idx || "");
+      return getResult(idx);
     } catch {
       setStatus("1 USK TO SPIN!");
       setDisabled(false);
