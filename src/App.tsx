@@ -74,7 +74,6 @@ function App() {
 
     setStatus("WAITING...");
     setDisabled(true);
-    let tx;
     try {
       const tx = await wallet.signAndBroadcast(msgs);
       assertIsDeliverTxSuccess(tx);
@@ -86,10 +85,10 @@ function App() {
 
       refreshBalance();
       return getResult(idx);
-    } catch {
+    } catch (e) {
       setStatus("1 USK TO SPIN!");
       setDisabled(false);
-      return getResult("");
+      throw e;
     }
   };
 
