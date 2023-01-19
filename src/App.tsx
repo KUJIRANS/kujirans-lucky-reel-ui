@@ -81,7 +81,7 @@ function App() {
         .find((e) => e.type === "wasm")
         ?.attributes.find((a) => a.key === "game")?.value;
       if (!idx) throw new Error("Game not found");
-      Spinny.current!.prespin();
+      Spinny.current!.Prespin();
 
       refreshBalance();
       return getResult(idx);
