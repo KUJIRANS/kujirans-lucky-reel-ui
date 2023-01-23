@@ -37,7 +37,10 @@ function App() {
     query &&
     query.bank
       .balance(wallet.account.address, TOKEN.reference)
-      .then(({ amount }) => setBalance(parseInt(amount)));
+      .then(({ amount }) => {
+        setBalance(parseInt(amount));
+        if (amount === "0") setDisabled(true);
+      });
 
   useEffect(() => {
     refreshBalance();
