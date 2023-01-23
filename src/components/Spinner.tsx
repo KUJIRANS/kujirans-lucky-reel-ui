@@ -1,11 +1,11 @@
 import {
-  useEffect,
-  useRef,
   forwardRef,
+  useEffect,
   useImperativeHandle,
+  useRef,
   useState,
 } from "react";
-import { useSpring, animated, easings } from "react-spring";
+import { animated, easings, useSpring } from "react-spring";
 
 const Spinner = forwardRef((props, ref) => {
   const Reel1 = useRef<HTMLDivElement | null>(null);
@@ -90,7 +90,12 @@ const Spinner = forwardRef((props, ref) => {
     Spin(p1: number, p2: number, p3: number, cb: () => void) {
       DoSpin(p1, p2, p3, cb);
     },
-    Cancel() {},
+    Cancel() {
+      setPreSpin(false);
+      populate(Reel1.current);
+      populate(Reel2.current);
+      populate(Reel3.current);
+    },
     Prespin() {
       const t1 = Math.round(Math.random() * 16);
       const t2 = Math.round(Math.random() * 16);
