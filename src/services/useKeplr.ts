@@ -1,12 +1,11 @@
 import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
 import { DeliverTxResponse } from "@cosmjs/stargate";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
-import { CHAIN_INFO, Keplr, MAINNET, NETWORK, USK } from "kujira.js";
+import { CHAIN_INFO, Keplr } from "kujira.js";
 import { useEffect, useState } from "react";
+import { NETWORK, TOKEN } from "./config";
 
-export const network: NETWORK = MAINNET;
-export const chainInfo = CHAIN_INFO[network];
-export const feeDenom = USK.reference;
+export const chainInfo = CHAIN_INFO[NETWORK];
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -27,7 +26,7 @@ export const useKeplr = (): UseKeplr => {
   const connect = () => {
     if (!keplr) return;
 
-    Keplr.connect(chainInfo, { feeDenom }).then((w) => {
+    Keplr.connect(chainInfo, { feeDenom: TOKEN.reference }).then((w) => {
       setWallet(w);
       document.cookie = "keplr=connected; path=/";
     });

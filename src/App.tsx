@@ -1,16 +1,14 @@
 import { assertIsDeliverTxSuccess, coins } from "@cosmjs/stargate";
 import { HttpBatchClient, Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import { kujiraQueryClient, msg, USK } from "kujira.js";
+import { kujiraQueryClient, msg } from "kujira.js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Balance from "./components/Balance";
 import Spin from "./components/Spin";
 import Spinner from "./components/Spinner";
 import Status from "./components/Status";
 import Wallet from "./components/Wallet";
+import { CONTRACT, TOKEN } from "./services/config";
 import { chainInfo, useKeplr } from "./services/useKeplr";
-
-const CONTRACT =
-  "kujira1rt0fzu0w32ymr6cxl4867rwqfaen6mmx2k2ulqna9zmc0ft2ye7qxeetxn";
 
 function App() {
   const Spinny = useRef<any | null>(null);
@@ -38,7 +36,7 @@ function App() {
     wallet.account &&
     query &&
     query.bank
-      .balance(wallet.account.address, USK.reference)
+      .balance(wallet.account.address, TOKEN.reference)
       .then(({ amount }) => setBalance(parseInt(amount)));
 
   useEffect(() => {
@@ -68,7 +66,7 @@ function App() {
         sender: wallet.account.address,
         contract: CONTRACT,
         msg: Buffer.from(JSON.stringify({ pull: {} })),
-        funds: coins(1000000, USK.reference),
+        funds: coins(1000000, TOKEN.reference),
       }),
     ];
 
